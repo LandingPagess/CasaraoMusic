@@ -581,7 +581,8 @@
       }
 
       function loadCMS() {
-        document.getElementById('login-screen').style.display = 'none';
+        // Limpa o body inteiro para evitar conflito de DOM com o React do Decap CMS
+        document.body.innerHTML = '<div id="nc-root"></div>';
         const s = document.createElement('script');
         // data-manual-init impede o CMS de buscar config.yml via HTTP
         s.setAttribute('data-manual-init', '');
