@@ -20,14 +20,17 @@ const navLinks = [
 
       <!-- Logo -->
       <a href="#home" class="shrink-0">
-        <img
-          src="/images/logo.png"
-          alt="Casarão Music"
-          class="h-14 md:h-16 w-auto object-contain"
-          width="64"
-          height="64"
-          fetchpriority="high"
-        />
+        <picture>
+          <source srcset="/images/logo.webp" type="image/webp" />
+          <img
+            src="/images/logo.png"
+            alt="Casarão Music"
+            class="h-14 md:h-16 w-auto object-contain"
+            width="200"
+            height="200"
+            fetchpriority="high"
+          />
+        </picture>
       </a>
 
       <!-- Nav Desktop -->

@@ -15,13 +15,16 @@ const quickLinks = [
       <!-- Brand column -->
       <div class="sm:col-span-2 lg:col-span-2">
         <a href="#home" class="inline-block mb-4">
-          <img
-            src="/images/logo.png"
-            alt="Casarão Music"
-            class="h-16 w-auto object-contain"
-            width="64"
-            height="64"
-          />
+          <picture>
+            <source srcset="/images/logo.webp" type="image/webp" />
+            <img
+              src="/images/logo.png"
+              alt="Casarão Music"
+              class="h-16 w-auto object-contain"
+              width="200"
+              height="200"
+            />
+          </picture>
         </a>
         <p class="text-sm leading-relaxed max-w-xs mb-6" style="color: var(--color-cream-muted);">
           O melhor da música ao vivo em Salvador. Um espaço único onde a cultura baiana
