@@ -1,0 +1,8 @@
+User-agent: *
+Allow: /
+
+Disallow: /admin/
+Disallow: /admin/cms.html
+Disallow: /api/
+
+Sitemap: https://casaraomusic.vercel.app/sitemap.xml

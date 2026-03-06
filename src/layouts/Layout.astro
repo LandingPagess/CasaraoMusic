@@ -8,13 +8,47 @@ interface Props {
 }
 
 const {
-  title = 'Casarão Music – Music Bar & Eventos em Salvador/BA',
-  description = 'O melhor da música ao vivo, drinks autorais e eventos inesquecíveis em Salvador. Venha viver a noite baiana no Casarão Music – Av. Aliomar Baleeiro, km 36.',
+  title = 'Casarão Music – Music Bar & Eventos ao Vivo em Salvador/BA',
+  description = 'O melhor da música ao vivo em Salvador. Samba, Forró, Rock, MPB e muito mais. Drinks autorais e eventos inesquecíveis na Av. Aliomar Baleeiro, km 36. Reserve sua mesa!',
   ogImage = 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1200&q=80&auto=format',
 } = Astro.props;
 
-const canonicalURL = Astro.url;
+const SITE_URL = 'https://casaraomusic.vercel.app';
+const canonicalURL = new URL(Astro.url.pathname, SITE_URL).href;
 const WA_FLOAT = 'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1!%20Quero%20saber%20sobre%20o%20Casar%C3%A3o%20Music.';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': ['BarOrPub', 'MusicVenue'],
+  name: 'Casarão Music',
+  description,
+  url: SITE_URL,
+  telephone: '+55XXXXXXXXXX',
+  image: ogImage,
+  address: {
+    '@type': 'PostalAddress',
+    streetAddress: 'Av. Aliomar Baleeiro, km 36',
+    addressLocality: 'Salvador',
+    addressRegion: 'BA',
+    postalCode: '41745-000',
+    addressCountry: 'BR',
+  },
+  geo: {
+    '@type': 'GeoCoordinates',
+    latitude: -12.9099,
+    longitude: -38.3614,
+  },
+  openingHoursSpecification: [
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday'], opens: '18:00', closes: '00:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Friday', 'Saturday'], opens: '18:00', closes: '02:00' },
+    { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Sunday'], opens: '17:00', closes: '23:00' },
+  ],
+  servesCuisine: 'Bar',
+  priceRange: '$$',
+  sameAs: [
+    'https://www.instagram.com/casaraomusic',
+  ],
+};
 ---
 
 <!doctype html>
@@ -24,11 +58,13 @@ const WA_FLOAT = 'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="theme-color" content="#0D0D0D" />
 
-    <!-- SEO -->
+    <!-- SEO primário -->
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonicalURL} />
-    <meta name="robots" content="index, follow" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="keywords" content="música ao vivo Salvador, bar Salvador, eventos Salvador, samba, forró, MPB, rock, Casarão Music, Av. Aliomar Baleeiro" />
+    <meta name="author" content="Casarão Music" />
 
     <!-- Open Graph -->
     <meta property="og:type" content="website" />
@@ -36,6 +72,9 @@ const WA_FLOAT = 'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={ogImage} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="Casarão Music – Music Bar em Salvador" />
     <meta property="og:locale" content="pt_BR" />
     <meta property="og:site_name" content="Casarão Music" />
 
@@ -44,16 +83,27 @@ const WA_FLOAT = 'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1
     <meta name="twitter:title" content={title} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={ogImage} />
+    <meta name="twitter:image:alt" content="Casarão Music – Music Bar em Salvador" />
 
-    <!-- Geo tags -->
+    <!-- Geo -->
     <meta name="geo.region" content="BR-BA" />
-    <meta name="geo.placename" content="Salvador" />
+    <meta name="geo.placename" content="Salvador, Bahia" />
+    <meta name="geo.position" content="-12.9099;-38.3614" />
+    <meta name="ICBM" content="-12.9099, -38.3614" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="sitemap" href="/sitemap.xml" />
 
-    <!-- Preconnect para Unsplash -->
+    <!-- Hreflang (auto-referência — site em pt-BR único) -->
+    <link rel="alternate" hreflang="pt-BR" href={canonicalURL} />
+    <link rel="alternate" hreflang="x-default" href={canonicalURL} />
+
+    <!-- Preconnect -->
     <link rel="preconnect" href="https://images.unsplash.com" />
+
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
   </head>
   <body>
     <slot />
