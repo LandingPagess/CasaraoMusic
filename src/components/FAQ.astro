@@ -23,16 +23,18 @@ const perguntas = [
 ];
 ---
 
-<section class="py-20 md:py-28" style="background-color: var(--color-dark);">
+<section class="py-24 md:py-32" style="background-color: var(--color-dark);">
   <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section header -->
-    <div class="text-center mb-14">
-      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
-        Tire suas dúvidas
-      </p>
+    <div class="text-center mb-14" data-animate>
+      <div class="flex items-center gap-3 justify-center mb-4">
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+        <span class="text-xs uppercase tracking-[0.3em] font-medium" style="color: var(--color-primary);">Tire suas dúvidas</span>
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+      </div>
       <h2
-        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        class="text-4xl md:text-5xl font-bold"
         style="font-family: var(--font-playfair); color: var(--color-cream);"
       >
         Perguntas Frequentes
@@ -40,15 +42,16 @@ const perguntas = [
     </div>
 
     <!-- Accordion -->
-    <div class="space-y-3" id="faq-container">
+    <div class="space-y-0" id="faq-container" data-animate data-animate-delay="1">
       {perguntas.map((item, index) => (
         <div
-          class="faq-item rounded-2xl overflow-hidden transition-all duration-300"
-          style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.06);"
+          class="faq-item transition-all duration-300 overflow-hidden"
+          style={`border-bottom: 1px solid rgba(255,255,255,0.08);
+            ${index === 0 ? 'border-top: 1px solid rgba(255,255,255,0.08);' : ''}`}
           data-index={index}
         >
           <button
-            class="faq-trigger w-full flex items-center justify-between gap-4 p-6 text-left"
+            class="faq-trigger w-full flex items-center justify-between gap-4 py-5 px-1 text-left"
             aria-expanded="false"
             aria-controls={`faq-answer-${index}`}
           >
@@ -59,10 +62,17 @@ const perguntas = [
               {item.pergunta}
             </span>
             <span
-              class="faq-icon shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
-              style="background-color: rgba(212,160,23,0.1); color: var(--color-primary);"
+              class="faq-icon shrink-0 w-8 h-8 rounded-full flex items-center justify-center"
+              style="background-color: rgba(212,160,23,0.1); color: var(--color-primary); transition: background-color 0.3s ease;"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="faq-chevron w-4 h-4"
+                style="transition: transform 0.3s ease;"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
               </svg>
             </span>
@@ -73,19 +83,21 @@ const perguntas = [
             class="faq-answer overflow-hidden"
             style="max-height: 0; transition: max-height 0.35s ease;"
           >
-            <p
-              class="px-6 pb-6 text-sm leading-relaxed"
-              style="color: var(--color-cream-muted);"
+            <div
+              class="faq-answer-inner pb-5 px-1 border-l-4 ml-0 pl-4 transition-all duration-300"
+              style="border-color: transparent;"
             >
-              {item.resposta}
-            </p>
+              <p class="text-sm leading-relaxed" style="color: var(--color-cream-muted);">
+                {item.resposta}
+              </p>
+            </div>
           </div>
         </div>
       ))}
     </div>
 
     <!-- Contact note -->
-    <p class="text-center text-sm mt-10" style="color: var(--color-cream-muted);">
+    <p class="text-center text-sm mt-10" data-animate data-animate-delay="2" style="color: var(--color-cream-muted);">
       Ainda tem dúvidas?{' '}
       <a
         href="https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Casar%C3%A3o%20Music."
@@ -105,25 +117,34 @@ const perguntas = [
 
   triggers.forEach((trigger) => {
     trigger.addEventListener('click', () => {
-      const item = trigger.closest('.faq-item') as HTMLElement;
+      const item   = trigger.closest('.faq-item') as HTMLElement;
       const answer = item.querySelector<HTMLElement>('.faq-answer');
-      const icon = item.querySelector<HTMLElement>('.faq-icon svg');
+      const inner  = item.querySelector<HTMLElement>('.faq-answer-inner');
+      const chevron = item.querySelector<HTMLElement>('.faq-chevron');
+      const icon   = item.querySelector<HTMLElement>('.faq-icon');
       const isOpen = trigger.getAttribute('aria-expanded') === 'true';
 
       // Close all
       document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach((t) => {
         t.setAttribute('aria-expanded', 'false');
-        const a = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-answer');
-        const ic = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-icon svg');
-        if (a) a.style.maxHeight = '0';
-        if (ic) ic.style.transform = 'rotate(0deg)';
+        const a  = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-answer');
+        const inn = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-answer-inner');
+        const ch = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-chevron');
+        const ic = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-icon');
+        if (a)   a.style.maxHeight = '0';
+        if (inn) { inn.style.borderColor = 'transparent'; inn.style.backgroundColor = 'transparent'; }
+        if (ch)  ch.style.transform = 'rotate(0deg)';
+        if (ic)  ic.style.backgroundColor = 'rgba(212,160,23,0.1)';
       });
 
       // Open clicked (if it was closed)
-      if (!isOpen && answer && icon) {
+      if (!isOpen && answer && inner && chevron) {
         trigger.setAttribute('aria-expanded', 'true');
-        answer.style.maxHeight = answer.scrollHeight + 'px';
-        icon.style.transform = 'rotate(180deg)';
+        answer.style.maxHeight = answer.scrollHeight + 32 + 'px';
+        inner.style.borderColor = 'var(--color-primary)';
+        inner.style.backgroundColor = 'rgba(212,160,23,0.04)';
+        chevron.style.transform = 'rotate(180deg)';
+        if (icon) icon.style.backgroundColor = 'rgba(212,160,23,0.2)';
       }
     });
   });

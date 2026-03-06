@@ -1,28 +1,33 @@
 ---
 const stats = [
-  { value: '5+', label: 'Anos de História' },
-  { value: '200+', label: 'Shows Realizados' },
-  { value: '4.5★', label: 'Avaliação Google' },
+  { numericValue: 5, suffix: '+', label: 'Anos de História', id: 'stat-anos' },
+  { numericValue: 200, suffix: '+', label: 'Shows Realizados', id: 'stat-shows' },
+  { numericValue: 4.5, suffix: '★', label: 'Avaliação Google', id: 'stat-google', isDecimal: true },
 ];
 ---
 
-<section id="sobre" class="py-20 md:py-28" style="background-color: var(--color-surface);">
+<section id="sobre" class="py-24 md:py-32" style="background-color: var(--color-surface);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
 
       <!-- Text content -->
       <div>
-        <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-4" style="color: var(--color-primary);">
-          Nossa História
-        </p>
+        <div class="flex items-center gap-3 mb-5" data-animate>
+          <div class="h-px w-12" style="background: var(--color-primary);"></div>
+          <span class="text-xs uppercase tracking-[0.3em] font-medium" style="color: var(--color-primary);">Nossa História</span>
+          <div class="h-px w-12" style="background: var(--color-primary);"></div>
+        </div>
+
         <h2
-          class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight"
+          class="text-4xl md:text-5xl font-bold mb-6 leading-tight"
           style="font-family: var(--font-playfair); color: var(--color-cream);"
+          data-animate
+          data-animate-delay="1"
         >
           Um Espaço Feito Para Quem Ama Música de Verdade
         </h2>
 
-        <div class="space-y-4 mb-10">
+        <div class="space-y-4 mb-10" data-animate data-animate-delay="2">
           <p class="text-base leading-relaxed" style="color: rgba(245,240,232,0.8);">
             O Casarão Music nasceu da paixão pela cultura baiana e pela música ao vivo. Em meio a uma
             estrutura aconchegante de chácara, criamos um espaço onde artistas e público se encontram
@@ -37,18 +42,37 @@ const stats = [
 
         <!-- Stats -->
         <div class="grid grid-cols-3 gap-4 mb-10">
-          {stats.map((stat) => (
-            <div class="text-center p-4 rounded-xl" style="background-color: rgba(212,160,23,0.08); border: 1px solid rgba(212,160,23,0.2);">
-              <p class="text-2xl md:text-3xl font-bold mb-1" style="font-family: var(--font-playfair); color: var(--color-primary);">
-                {stat.value}
+          {stats.map((stat, i) => (
+            <div
+              class="p-4 rounded-xl"
+              data-animate
+              data-animate-delay={String(i + 1)}
+              style="background-color: rgba(212,160,23,0.06); border-left: 4px solid var(--color-primary);"
+            >
+              <p
+                id={stat.id}
+                class="text-4xl md:text-5xl font-bold leading-none mb-1"
+                style="font-family: var(--font-playfair); color: var(--color-primary);"
+                data-target={stat.numericValue}
+                data-suffix={stat.suffix}
+                data-decimal={stat.isDecimal ? 'true' : 'false'}
+              >
+                0{stat.suffix}
               </p>
-              <p class="text-xs" style="color: var(--color-cream-muted);">{stat.label}</p>
+              <p class="text-xs uppercase tracking-widest" style="color: var(--color-cream-muted);">
+                {stat.label}
+              </p>
             </div>
           ))}
         </div>
 
-        <!-- Address CTA -->
-        <div class="flex items-start gap-3 p-4 rounded-xl" style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+        <!-- Address block -->
+        <div
+          class="flex items-start gap-3 p-4 rounded-xl"
+          data-animate
+          data-animate-delay="3"
+          style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);"
+        >
           <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0 mt-0.5" style="color: var(--color-primary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
@@ -64,7 +88,7 @@ const stats = [
       </div>
 
       <!-- Image -->
-      <div class="relative">
+      <div class="relative" data-animate data-animate-delay="2">
         <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]">
           <img
             src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=900&q=80&auto=format"
@@ -74,23 +98,52 @@ const stats = [
             height="1125"
             loading="lazy"
           />
-          <!-- Overlay gradient -->
           <div
             class="absolute inset-0"
             style="background: linear-gradient(to top, rgba(13,13,13,0.6) 0%, transparent 60%);"
           ></div>
         </div>
-        <!-- Decorative element -->
-        <div
-          class="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30"
-          style="background-color: var(--color-primary);"
-        ></div>
-        <div
-          class="absolute -bottom-4 -left-4 w-32 h-32 rounded-full blur-3xl opacity-20"
-          style="background-color: var(--color-secondary);"
-        ></div>
+        <div class="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30" style="background-color: var(--color-primary);"></div>
+        <div class="absolute -bottom-4 -left-4 w-32 h-32 rounded-full blur-3xl opacity-20" style="background-color: var(--color-secondary);"></div>
       </div>
 
     </div>
   </div>
 </section>
+
+<script>
+  function easeOutExpo(t: number): number {
+    return t === 1 ? 1 : 1 - Math.pow(2, -10 * t);
+  }
+
+  function animateCounter(el: HTMLElement) {
+    const target = parseFloat(el.dataset.target ?? '0');
+    const suffix = el.dataset.suffix ?? '';
+    const isDecimal = el.dataset.decimal === 'true';
+    const duration = 2000;
+    const start = performance.now();
+
+    function frame(now: number) {
+      const elapsed = now - start;
+      const progress = Math.min(elapsed / duration, 1);
+      const eased = easeOutExpo(progress);
+      const current = target * eased;
+      el.textContent = (isDecimal ? current.toFixed(1) : Math.floor(current).toString()) + suffix;
+      if (progress < 1) requestAnimationFrame(frame);
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  const statEls = document.querySelectorAll<HTMLElement>('[data-target]');
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        animateCounter(entry.target as HTMLElement);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  statEls.forEach((el) => counterObserver.observe(el));
+</script>

@@ -21,16 +21,18 @@ const diferenciais = [
 ];
 ---
 
-<section class="py-20 md:py-28" style="background-color: var(--color-surface);">
+<section class="py-24 md:py-32" style="background-color: var(--color-surface);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section header -->
-    <div class="text-center mb-14">
-      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
-        Por que escolher o Casarão
-      </p>
+    <div class="text-center mb-14" data-animate>
+      <div class="flex items-center gap-3 justify-center mb-4">
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+        <span class="text-xs uppercase tracking-[0.3em] font-medium" style="color: var(--color-primary);">Por que escolher o Casarão</span>
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+      </div>
       <h2
-        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        class="text-4xl md:text-5xl font-bold"
         style="font-family: var(--font-playfair); color: var(--color-cream);"
       >
         Uma Experiência Completa
@@ -39,10 +41,12 @@ const diferenciais = [
 
     <!-- Cards grid -->
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-      {diferenciais.map((item) => (
+      {diferenciais.map((item, i) => (
         <div
           class="group flex flex-col items-center text-center p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
           style="background-color: var(--color-dark); border: 1px solid rgba(212,160,23,0.12);"
+          data-animate
+          data-animate-delay={String(i + 1)}
         >
           <div
             class="text-5xl mb-5 p-4 rounded-2xl transition-transform duration-300 group-hover:scale-110"

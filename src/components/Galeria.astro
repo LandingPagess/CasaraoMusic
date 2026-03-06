@@ -3,93 +3,94 @@ const fotos = [
   {
     src: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80&auto=format',
     alt: 'Público animado em show ao vivo no Casarão Music',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-64',
   },
   {
     src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80&auto=format',
     alt: 'Palco iluminado com efeitos de luz durante apresentação',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-80',
   },
   {
     src: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80&auto=format',
     alt: 'Show ao vivo com luzes coloridas de palco',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-48',
   },
   {
     src: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format',
     alt: 'Bar com drinks e coquetéis especiais do Casarão Music',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-72',
   },
   {
     src: 'https://images.unsplash.com/photo-1485872299829-c673f5194813?w=800&q=80&auto=format',
     alt: 'Ambiente interno do music bar com decoração especial',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-56',
   },
   {
     src: 'https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80&auto=format',
     alt: 'Pessoas curtindo a noite e confraternizando no bar',
-    width: 800,
-    height: 534,
+    width: 800, height: 534, heightClass: 'h-80',
   },
 ];
 ---
 
-<section id="galeria" class="py-20 md:py-28" style="background-color: var(--color-dark);">
+<section id="galeria" class="py-24 md:py-32" style="background-color: var(--color-dark);">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
     <!-- Section header -->
-    <div class="text-center mb-14">
-      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
-        Galeria
-      </p>
+    <div class="text-center mb-14" data-animate>
+      <div class="flex items-center gap-3 justify-center mb-4">
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+        <span class="text-xs uppercase tracking-[0.3em] font-medium" style="color: var(--color-primary);">Galeria</span>
+        <div class="h-px w-12" style="background: var(--color-primary);"></div>
+      </div>
       <h2
-        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        class="text-4xl md:text-5xl font-bold"
         style="font-family: var(--font-playfair); color: var(--color-cream);"
       >
         Momentos que Ficam
       </h2>
     </div>
 
-    <!-- Gallery grid -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+    <!-- Masonry grid -->
+    <div class="masonry-grid">
       {fotos.map((foto, index) => (
         <div
-          class="relative overflow-hidden rounded-2xl aspect-[4/3] group cursor-pointer"
-          style="background-color: var(--color-surface);"
+          class="masonry-item group relative overflow-hidden rounded-xl cursor-pointer mb-4 md:mb-5"
+          data-animate
+          data-animate-delay={String((index % 3) + 1)}
+          data-lightbox-src={foto.src}
+          data-lightbox-alt={foto.alt}
         >
           <img
             src={foto.src}
             alt={foto.alt}
-            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            class={`w-full object-cover transition-transform duration-500 group-hover:scale-110 ${foto.heightClass}`}
             width={foto.width}
             height={foto.height}
-            loading={index < 3 ? 'eager' : 'lazy'}
+            loading={index < 2 ? 'eager' : 'lazy'}
           />
           <!-- Hover overlay -->
           <div
-            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
-            style="background-color: rgba(13,13,13,0.5);"
+            class="absolute inset-0 flex items-center justify-center transition-all duration-300"
+            style="background-color: rgba(0,0,0,0); backdrop-filter: blur(0px);"
+            data-overlay
           >
-            <div
-              class="p-3 rounded-full"
-              style="background-color: rgba(212,160,23,0.9);"
+            <span
+              class="text-white text-sm font-semibold opacity-0 transition-opacity duration-300 flex items-center gap-2"
+              data-label
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" style="color: #000;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
               </svg>
-            </div>
+              Ver foto
+            </span>
           </div>
         </div>
       ))}
     </div>
 
     <!-- Follow CTA -->
-    <div class="mt-12 text-center">
+    <div class="mt-12 text-center" data-animate>
       <p class="text-sm mb-4" style="color: var(--color-cream-muted);">
         Veja mais momentos nas nossas redes sociais
       </p>
@@ -97,7 +98,8 @@ const fotos = [
         href="https://www.instagram.com/casaraomusic_/"
         target="_blank"
         rel="noopener noreferrer"
-        class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold
+               transition-all duration-300 hover:scale-105 hover:shadow-lg"
         style="border: 1px solid var(--color-primary); color: var(--color-primary);"
       >
         <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
@@ -108,3 +110,108 @@ const fotos = [
     </div>
   </div>
 </section>
+
+<!-- Lightbox modal -->
+<div
+  id="lightbox"
+  class="hidden fixed inset-0 z-[100] flex items-center justify-center p-4"
+  style="background-color: rgba(0,0,0,0.95);"
+  role="dialog"
+  aria-modal="true"
+  aria-label="Visualizar foto"
+>
+  <button
+    id="lightbox-close"
+    class="absolute top-5 right-5 w-11 h-11 rounded-full flex items-center justify-center
+           transition-all duration-200 hover:scale-110 z-10"
+    style="background-color: rgba(255,255,255,0.1); color: #fff;"
+    aria-label="Fechar"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+
+  <img
+    id="lightbox-img"
+    src=""
+    alt=""
+    class="max-w-full max-h-[90vh] object-contain rounded-xl shadow-2xl"
+  />
+</div>
+
+<script>
+  // ─── Hover overlay effect ─────────────────────────────
+  document.querySelectorAll<HTMLElement>('.masonry-item').forEach((item) => {
+    const overlay = item.querySelector<HTMLElement>('[data-overlay]');
+    const label   = item.querySelector<HTMLElement>('[data-label]');
+
+    item.addEventListener('mouseenter', () => {
+      if (overlay) overlay.style.backgroundColor = 'rgba(0,0,0,0.45)';
+      if (label)   label.style.opacity = '1';
+    });
+    item.addEventListener('mouseleave', () => {
+      if (overlay) overlay.style.backgroundColor = 'rgba(0,0,0,0)';
+      if (label)   label.style.opacity = '0';
+    });
+  });
+
+  // ─── Lightbox ────────────────────────────────────────
+  const lightbox    = document.getElementById('lightbox')!;
+  const lightboxImg = document.getElementById('lightbox-img') as HTMLImageElement;
+  const closeBtn    = document.getElementById('lightbox-close')!;
+
+  function openLightbox(src: string, alt: string) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.classList.remove('hidden');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.add('hidden');
+    document.body.style.overflow = '';
+    lightboxImg.src = '';
+  }
+
+  document.querySelectorAll<HTMLElement>('.masonry-item').forEach((item) => {
+    item.addEventListener('click', () => {
+      const src = item.dataset.lightboxSrc ?? '';
+      const alt = item.dataset.lightboxAlt ?? '';
+      openLightbox(src, alt);
+    });
+  });
+
+  closeBtn.addEventListener('click', closeLightbox);
+
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+</script>
+
+<style>
+  .masonry-grid {
+    columns: 1;
+    gap: 1rem;
+  }
+  @media (min-width: 768px) {
+    .masonry-grid {
+      columns: 2;
+      gap: 1.25rem;
+    }
+  }
+  @media (min-width: 1024px) {
+    .masonry-grid {
+      columns: 3;
+      gap: 1.25rem;
+    }
+  }
+  .masonry-item {
+    break-inside: avoid;
+    display: block;
+  }
+</style>

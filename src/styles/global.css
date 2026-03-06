@@ -31,14 +31,64 @@ body {
   -moz-osx-font-smoothing: grayscale;
 }
 
-/* Scrollbar customization */
-::-webkit-scrollbar {
-  width: 6px;
+/* ─── Scrollbar ─────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--color-dark); }
+::-webkit-scrollbar-thumb { background: var(--color-primary); border-radius: 3px; }
+
+/* ─── Scroll-triggered animations ───────────────────── */
+[data-animate] {
+  opacity: 0;
+  transform: translateY(32px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
 }
-::-webkit-scrollbar-track {
-  background: var(--color-dark);
+[data-animate].animate-in {
+  opacity: 1;
+  transform: translateY(0);
 }
-::-webkit-scrollbar-thumb {
-  background: var(--color-primary);
-  border-radius: 3px;
+[data-animate-delay="1"] { transition-delay: 0.1s; }
+[data-animate-delay="2"] { transition-delay: 0.2s; }
+[data-animate-delay="3"] { transition-delay: 0.3s; }
+[data-animate-delay="4"] { transition-delay: 0.4s; }
+[data-animate-delay="5"] { transition-delay: 0.5s; }
+[data-animate-delay="6"] { transition-delay: 0.6s; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-animate] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
 }
+
+/* ─── Header CTA pulse glow ─────────────────────────── */
+@keyframes pulse-glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(212, 160, 23, 0.4); }
+  50%       { box-shadow: 0 0 22px rgba(212, 160, 23, 0.9), 0 0 40px rgba(212, 160, 23, 0.3); }
+}
+.btn-pulse {
+  animation: pulse-glow 2.5s ease-in-out infinite;
+}
+
+/* ─── Floating WA slow bounce ────────────────────────── */
+@keyframes bounce-slow {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-6px); }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 2.8s ease-in-out infinite;
+}
+
+/* ─── Hero fade-in ───────────────────────────────────── */
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.animate-fade-in-up {
+  animation: fade-in-up 0.9s ease-out both;
+}
+.delay-100 { animation-delay: 0.1s; }
+.delay-200 { animation-delay: 0.2s; }
+.delay-300 { animation-delay: 0.3s; }
+.delay-500 { animation-delay: 0.5s; }
+.delay-700 { animation-delay: 0.7s; }
