@@ -15,7 +15,7 @@ const {
 
 const SITE_URL = 'https://casaraomusic.vercel.app';
 const canonicalURL = new URL(Astro.url.pathname, SITE_URL).href;
-const WA_FLOAT = 'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1!%20Quero%20saber%20sobre%20o%20Casar%C3%A3o%20Music.';
+const WA_FLOAT = 'https://api.whatsapp.com/send?phone=5571992984280&text=Ol%C3%A1!%20Quero%20saber%20sobre%20o%20Casar%C3%A3o%20Music.';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -23,7 +23,7 @@ const jsonLd = {
   name: 'Casarão Music',
   description,
   url: SITE_URL,
-  telephone: '+55XXXXXXXXXX',
+  telephone: '+5571992984280',
   image: ogImage,
   address: {
     '@type': 'PostalAddress',
@@ -35,8 +35,8 @@ const jsonLd = {
   },
   geo: {
     '@type': 'GeoCoordinates',
-    latitude: -12.9099,
-    longitude: -38.3614,
+    latitude: -12.9157337,
+    longitude: -38.4338615,
   },
   openingHoursSpecification: [
     { '@type': 'OpeningHoursSpecification', dayOfWeek: ['Wednesday', 'Thursday'], opens: '18:00', closes: '00:00' },
@@ -88,8 +88,8 @@ const jsonLd = {
     <!-- Geo -->
     <meta name="geo.region" content="BR-BA" />
     <meta name="geo.placename" content="Salvador, Bahia" />
-    <meta name="geo.position" content="-12.9099;-38.3614" />
-    <meta name="ICBM" content="-12.9099, -38.3614" />
+    <meta name="geo.position" content="-12.9157337;-38.4338615" />
+    <meta name="ICBM" content="-12.9157337, -38.4338615" />
 
     <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="/favicon/favicon.ico" />
