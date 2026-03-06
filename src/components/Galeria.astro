@@ -1,0 +1,110 @@
+---
+const fotos = [
+  {
+    src: 'https://images.unsplash.com/photo-1501386761578-eac5c94b800a?w=800&q=80&auto=format',
+    alt: 'Público animado em show ao vivo no Casarão Music',
+    width: 800,
+    height: 534,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1470229722913-7c0e2dbbafd3?w=800&q=80&auto=format',
+    alt: 'Palco iluminado com efeitos de luz durante apresentação',
+    width: 800,
+    height: 534,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=800&q=80&auto=format',
+    alt: 'Show ao vivo com luzes coloridas de palco',
+    width: 800,
+    height: 534,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1555041469-a586c61ea9bc?w=800&q=80&auto=format',
+    alt: 'Bar com drinks e coquetéis especiais do Casarão Music',
+    width: 800,
+    height: 534,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1485872299829-c673f5194813?w=800&q=80&auto=format',
+    alt: 'Ambiente interno do music bar com decoração especial',
+    width: 800,
+    height: 534,
+  },
+  {
+    src: 'https://images.unsplash.com/photo-1571204829887-3b8d69e4094d?w=800&q=80&auto=format',
+    alt: 'Pessoas curtindo a noite e confraternizando no bar',
+    width: 800,
+    height: 534,
+  },
+];
+---
+
+<section id="galeria" class="py-20 md:py-28" style="background-color: var(--color-dark);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-14">
+      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
+        Galeria
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        style="font-family: var(--font-playfair); color: var(--color-cream);"
+      >
+        Momentos que Ficam
+      </h2>
+    </div>
+
+    <!-- Gallery grid -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
+      {fotos.map((foto, index) => (
+        <div
+          class="relative overflow-hidden rounded-2xl aspect-[4/3] group cursor-pointer"
+          style="background-color: var(--color-surface);"
+        >
+          <img
+            src={foto.src}
+            alt={foto.alt}
+            class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+            width={foto.width}
+            height={foto.height}
+            loading={index < 3 ? 'eager' : 'lazy'}
+          />
+          <!-- Hover overlay -->
+          <div
+            class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center"
+            style="background-color: rgba(13,13,13,0.5);"
+          >
+            <div
+              class="p-3 rounded-full"
+              style="background-color: rgba(212,160,23,0.9);"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" style="color: #000;" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Follow CTA -->
+    <div class="mt-12 text-center">
+      <p class="text-sm mb-4" style="color: var(--color-cream-muted);">
+        Veja mais momentos nas nossas redes sociais
+      </p>
+      <a
+        href="https://www.instagram.com/casaraomusic_/"
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center gap-2 px-6 py-3 rounded-full text-sm font-semibold transition-all duration-300 hover:scale-105"
+        style="border: 1px solid var(--color-primary); color: var(--color-primary);"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/>
+        </svg>
+        @casaraomusic_
+      </a>
+    </div>
+  </div>
+</section>

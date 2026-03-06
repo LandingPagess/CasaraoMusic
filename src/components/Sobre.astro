@@ -1,0 +1,96 @@
+---
+const stats = [
+  { value: '5+', label: 'Anos de História' },
+  { value: '200+', label: 'Shows Realizados' },
+  { value: '4.5★', label: 'Avaliação Google' },
+];
+---
+
+<section id="sobre" class="py-20 md:py-28" style="background-color: var(--color-surface);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+
+      <!-- Text content -->
+      <div>
+        <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-4" style="color: var(--color-primary);">
+          Nossa História
+        </p>
+        <h2
+          class="text-3xl sm:text-4xl md:text-5xl font-bold mb-6 leading-tight"
+          style="font-family: var(--font-playfair); color: var(--color-cream);"
+        >
+          Um Espaço Feito Para Quem Ama Música de Verdade
+        </h2>
+
+        <div class="space-y-4 mb-10">
+          <p class="text-base leading-relaxed" style="color: rgba(245,240,232,0.8);">
+            O Casarão Music nasceu da paixão pela cultura baiana e pela música ao vivo. Em meio a uma
+            estrutura aconchegante de chácara, criamos um espaço onde artistas e público se encontram
+            de verdade.
+          </p>
+          <p class="text-base leading-relaxed" style="color: rgba(245,240,232,0.8);">
+            Localizado na Av. Aliomar Baleeiro, km 36, em Salvador, somos o ponto de encontro de quem
+            busca noites inesquecíveis, boa música e ainda melhor companhia. Venha nos visitar — sua
+            próxima história favorita começa aqui.
+          </p>
+        </div>
+
+        <!-- Stats -->
+        <div class="grid grid-cols-3 gap-4 mb-10">
+          {stats.map((stat) => (
+            <div class="text-center p-4 rounded-xl" style="background-color: rgba(212,160,23,0.08); border: 1px solid rgba(212,160,23,0.2);">
+              <p class="text-2xl md:text-3xl font-bold mb-1" style="font-family: var(--font-playfair); color: var(--color-primary);">
+                {stat.value}
+              </p>
+              <p class="text-xs" style="color: var(--color-cream-muted);">{stat.label}</p>
+            </div>
+          ))}
+        </div>
+
+        <!-- Address CTA -->
+        <div class="flex items-start gap-3 p-4 rounded-xl" style="background-color: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 shrink-0 mt-0.5" style="color: var(--color-primary);" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"/>
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"/>
+          </svg>
+          <div>
+            <p class="text-sm font-semibold mb-0.5" style="color: var(--color-cream);">Como chegar</p>
+            <p class="text-sm" style="color: var(--color-cream-muted);">
+              Av. Aliomar Baleeiro, km 36 – Salvador/BA<br />
+              Estacionamento próprio disponível
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Image -->
+      <div class="relative">
+        <div class="relative rounded-2xl overflow-hidden shadow-2xl aspect-[4/5]">
+          <img
+            src="https://images.unsplash.com/photo-1493676304819-0d7a8d026dcf?w=900&q=80&auto=format"
+            alt="Ambiente externo noturno do Casarão Music com luzes e mesas ao ar livre"
+            class="w-full h-full object-cover"
+            width="900"
+            height="1125"
+            loading="lazy"
+          />
+          <!-- Overlay gradient -->
+          <div
+            class="absolute inset-0"
+            style="background: linear-gradient(to top, rgba(13,13,13,0.6) 0%, transparent 60%);"
+          ></div>
+        </div>
+        <!-- Decorative element -->
+        <div
+          class="absolute -top-4 -right-4 w-24 h-24 rounded-full blur-2xl opacity-30"
+          style="background-color: var(--color-primary);"
+        ></div>
+        <div
+          class="absolute -bottom-4 -left-4 w-32 h-32 rounded-full blur-3xl opacity-20"
+          style="background-color: var(--color-secondary);"
+        ></div>
+      </div>
+
+    </div>
+  </div>
+</section>

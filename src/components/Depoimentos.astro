@@ -1,0 +1,100 @@
+---
+const depoimentos = [
+  {
+    texto:
+      'Melhor ambiente de Salvador para curtir música ao vivo. Voltei três vezes em um mês!',
+    autor: 'Juliana M.',
+    fonte: 'Google Reviews',
+    estrelas: 5,
+  },
+  {
+    texto:
+      'Atendimento impecável, drinks deliciosos e os shows são simplesmente incríveis. Virou programa fixo.',
+    autor: 'Rafael S.',
+    fonte: 'Google Reviews',
+    estrelas: 5,
+  },
+  {
+    texto:
+      'Reservamos o espaço para um aniversário e foi perfeito. Estrutura completa e equipe muito atenciosa.',
+    autor: 'Camila R.',
+    fonte: 'Google Reviews',
+    estrelas: 5,
+  },
+];
+---
+
+<section class="py-20 md:py-28" style="background-color: var(--color-surface);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-14">
+      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
+        Depoimentos
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        style="font-family: var(--font-playfair); color: var(--color-cream);"
+      >
+        Quem Veio, Voltou
+      </h2>
+
+      <!-- Google rating badge -->
+      <div class="inline-flex items-center gap-2 mt-6 px-5 py-2.5 rounded-full"
+        style="background-color: rgba(212,160,23,0.1); border: 1px solid rgba(212,160,23,0.25);"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#D4A017">
+          <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+        </svg>
+        <span class="font-bold" style="color: var(--color-primary);">4.5</span>
+        <span class="text-sm" style="color: var(--color-cream-muted);">no Google Reviews</span>
+      </div>
+    </div>
+
+    <!-- Testimonials grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {depoimentos.map((dep) => (
+        <div
+          class="flex flex-col p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          style="background-color: var(--color-dark); border: 1px solid rgba(255,255,255,0.06);"
+        >
+          <!-- Stars -->
+          <div class="flex gap-0.5 mb-4">
+            {Array.from({ length: dep.estrelas }).map(() => (
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#D4A017">
+                <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
+              </svg>
+            ))}
+          </div>
+
+          <!-- Quote icon -->
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 mb-4 opacity-30" style="color: var(--color-primary);" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
+          </svg>
+
+          <!-- Testimonial text -->
+          <blockquote
+            class="text-base leading-relaxed flex-1 mb-6 italic"
+            style="color: rgba(245,240,232,0.85);"
+          >
+            "{dep.texto}"
+          </blockquote>
+
+          <!-- Author -->
+          <div class="flex items-center gap-3 pt-4" style="border-top: 1px solid rgba(255,255,255,0.08);">
+            <div
+              class="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold shrink-0"
+              style="background-color: rgba(212,160,23,0.15); color: var(--color-primary);"
+            >
+              {dep.autor.charAt(0)}
+            </div>
+            <div>
+              <p class="text-sm font-semibold" style="color: var(--color-cream);">{dep.autor}</p>
+              <p class="text-xs" style="color: var(--color-cream-muted);">{dep.fonte}</p>
+            </div>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

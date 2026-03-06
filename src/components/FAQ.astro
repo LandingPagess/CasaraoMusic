@@ -1,0 +1,130 @@
+---
+const perguntas = [
+  {
+    pergunta: 'Qual é a programação semanal?',
+    resposta:
+      'Nossa agenda é atualizada mensalmente. Fique de olho nas nossas redes sociais ou entre em contato pelo WhatsApp para saber os próximos shows.',
+  },
+  {
+    pergunta: 'É possível reservar mesa antecipadamente?',
+    resposta:
+      'Sim! Recomendamos a reserva antecipada, especialmente nos fins de semana. Fale conosco pelo WhatsApp para garantir seu lugar.',
+  },
+  {
+    pergunta: 'O espaço está disponível para eventos privados?',
+    resposta:
+      'Sim, disponibilizamos o espaço para festas, aniversários e eventos corporativos. Entre em contato para receber uma proposta personalizada.',
+  },
+  {
+    pergunta: 'Onde fica o Casarão Music?',
+    resposta:
+      'Estamos na Av. Aliomar Baleeiro, km 36, Salvador/BA. Acesso fácil com estacionamento próprio.',
+  },
+];
+---
+
+<section class="py-20 md:py-28" style="background-color: var(--color-dark);">
+  <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-14">
+      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
+        Tire suas dúvidas
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        style="font-family: var(--font-playfair); color: var(--color-cream);"
+      >
+        Perguntas Frequentes
+      </h2>
+    </div>
+
+    <!-- Accordion -->
+    <div class="space-y-3" id="faq-container">
+      {perguntas.map((item, index) => (
+        <div
+          class="faq-item rounded-2xl overflow-hidden transition-all duration-300"
+          style="background-color: var(--color-surface); border: 1px solid rgba(255,255,255,0.06);"
+          data-index={index}
+        >
+          <button
+            class="faq-trigger w-full flex items-center justify-between gap-4 p-6 text-left"
+            aria-expanded="false"
+            aria-controls={`faq-answer-${index}`}
+          >
+            <span
+              class="text-base font-semibold leading-snug"
+              style="color: var(--color-cream);"
+            >
+              {item.pergunta}
+            </span>
+            <span
+              class="faq-icon shrink-0 w-8 h-8 rounded-full flex items-center justify-center transition-all duration-300"
+              style="background-color: rgba(212,160,23,0.1); color: var(--color-primary);"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"/>
+              </svg>
+            </span>
+          </button>
+
+          <div
+            id={`faq-answer-${index}`}
+            class="faq-answer overflow-hidden"
+            style="max-height: 0; transition: max-height 0.35s ease;"
+          >
+            <p
+              class="px-6 pb-6 text-sm leading-relaxed"
+              style="color: var(--color-cream-muted);"
+            >
+              {item.resposta}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+
+    <!-- Contact note -->
+    <p class="text-center text-sm mt-10" style="color: var(--color-cream-muted);">
+      Ainda tem dúvidas?{' '}
+      <a
+        href="https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1!%20Tenho%20uma%20d%C3%BAvida%20sobre%20o%20Casar%C3%A3o%20Music."
+        target="_blank"
+        rel="noopener noreferrer"
+        class="font-semibold underline underline-offset-2 transition-colors hover:no-underline"
+        style="color: var(--color-primary);"
+      >
+        Fale conosco no WhatsApp
+      </a>
+    </p>
+  </div>
+</section>
+
+<script>
+  const triggers = document.querySelectorAll<HTMLButtonElement>('.faq-trigger');
+
+  triggers.forEach((trigger) => {
+    trigger.addEventListener('click', () => {
+      const item = trigger.closest('.faq-item') as HTMLElement;
+      const answer = item.querySelector<HTMLElement>('.faq-answer');
+      const icon = item.querySelector<HTMLElement>('.faq-icon svg');
+      const isOpen = trigger.getAttribute('aria-expanded') === 'true';
+
+      // Close all
+      document.querySelectorAll<HTMLButtonElement>('.faq-trigger').forEach((t) => {
+        t.setAttribute('aria-expanded', 'false');
+        const a = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-answer');
+        const ic = t.closest('.faq-item')?.querySelector<HTMLElement>('.faq-icon svg');
+        if (a) a.style.maxHeight = '0';
+        if (ic) ic.style.transform = 'rotate(0deg)';
+      });
+
+      // Open clicked (if it was closed)
+      if (!isOpen && answer && icon) {
+        trigger.setAttribute('aria-expanded', 'true');
+        answer.style.maxHeight = answer.scrollHeight + 'px';
+        icon.style.transform = 'rotate(180deg)';
+      }
+    });
+  });
+</script>

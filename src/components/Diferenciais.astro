@@ -1,0 +1,66 @@
+---
+const diferenciais = [
+  {
+    emoji: '🎸',
+    titulo: 'Música Ao Vivo',
+    descricao:
+      'Shows todas as semanas com os melhores artistas da cena baiana. Do samba ao rock, sempre tem música boa rolando.',
+  },
+  {
+    emoji: '🥃',
+    titulo: 'Bar Completo',
+    descricao:
+      'Drinks autorais, cervejas geladas e uma carta pensada para a noite. Cada gole é uma experiência à parte.',
+  },
+  {
+    emoji: '🌿',
+    titulo: 'Espaço Aberto',
+    descricao:
+      'Ambiente de chácara com toda a energia de um music bar. Natureza e música juntas — do jeito que deve ser.',
+  },
+];
+---
+
+<section class="py-20 md:py-28" style="background-color: var(--color-surface);">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <!-- Section header -->
+    <div class="text-center mb-14">
+      <p class="text-sm font-semibold tracking-[0.2em] uppercase mb-3" style="color: var(--color-primary);">
+        Por que escolher o Casarão
+      </p>
+      <h2
+        class="text-3xl sm:text-4xl md:text-5xl font-bold"
+        style="font-family: var(--font-playfair); color: var(--color-cream);"
+      >
+        Uma Experiência Completa
+      </h2>
+    </div>
+
+    <!-- Cards grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+      {diferenciais.map((item) => (
+        <div
+          class="group flex flex-col items-center text-center p-8 rounded-2xl transition-all duration-300 hover:-translate-y-1 hover:shadow-2xl"
+          style="background-color: var(--color-dark); border: 1px solid rgba(212,160,23,0.12);"
+        >
+          <div
+            class="text-5xl mb-5 p-4 rounded-2xl transition-transform duration-300 group-hover:scale-110"
+            style="background-color: rgba(212,160,23,0.08);"
+          >
+            {item.emoji}
+          </div>
+          <h3
+            class="text-xl font-bold mb-3"
+            style="font-family: var(--font-playfair); color: var(--color-cream);"
+          >
+            {item.titulo}
+          </h3>
+          <p class="text-sm leading-relaxed" style="color: var(--color-cream-muted);">
+            {item.descricao}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
