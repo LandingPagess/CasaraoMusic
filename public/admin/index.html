@@ -583,7 +583,88 @@
       function loadCMS() {
         document.getElementById('login-screen').style.display = 'none';
         const s = document.createElement('script');
+        // data-manual-init impede o CMS de buscar config.yml via HTTP
+        s.setAttribute('data-manual-init', '');
         s.src = 'https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js';
+        s.onload = () => {
+          CMS.init({
+            config: {
+              backend: {
+                name:   'github',
+                repo:   'LandingPagess/CasaraoMusic',
+                branch: 'main',
+              },
+              media_folder:  'public/uploads',
+              public_folder: '/uploads',
+              locale: 'pt',
+              collections: [
+                {
+                  name:           'eventos',
+                  label:          'Eventos / Programação',
+                  label_singular: 'Evento',
+                  folder:         'src/content/eventos',
+                  create:         true,
+                  delete:         true,
+                  slug:           '{{year}}-{{month}}-{{day}}-{{slug}}',
+                  summary:        '{{artista}} · {{diaSemana}} {{data}} · {{estilo}}',
+                  fields: [
+                    {
+                      label: 'Artista / Nome do Evento',
+                      name:  'artista',
+                      widget: 'string',
+                      hint:  'Ex: Grupo Semente, Banda Nordestina…',
+                    },
+                    {
+                      label:   'Data (ex: 14/03)',
+                      name:    'data',
+                      widget:  'string',
+                      hint:    'Formato DD/MM',
+                      pattern: ['^\\d{2}\\/\\d{2}$', 'Use o formato DD/MM, ex: 14/03'],
+                    },
+                    {
+                      label:   'Dia da Semana',
+                      name:    'diaSemana',
+                      widget:  'select',
+                      options: ['Segunda-feira','Terça-feira','Quarta-feira','Quinta-feira','Sexta-feira','Sábado','Domingo'],
+                    },
+                    {
+                      label:   'Estilo Musical',
+                      name:    'estilo',
+                      widget:  'select',
+                      options: ['Samba & Pagode','Forró Roots','Rock Nacional','MPB & Bossa Nova','Axé & Pop Baiano','Jazz & Blues'],
+                    },
+                    {
+                      label:  'Descrição Curta',
+                      name:   'descricao',
+                      widget: 'text',
+                      hint:   'Máximo 150 caracteres recomendado',
+                    },
+                    {
+                      label:    'Tag (opcional)',
+                      name:     'tag',
+                      widget:   'string',
+                      required: false,
+                      hint:     'Ex: Novo, Imperdível, Em Alta',
+                    },
+                    {
+                      label:   'É Destaque?',
+                      name:    'destaque',
+                      widget:  'boolean',
+                      default: false,
+                      hint:    'Eventos em destaque ocupam mais espaço na grade',
+                    },
+                    {
+                      label:    'Imagem (opcional)',
+                      name:     'thumbnail',
+                      widget:   'image',
+                      required: false,
+                    },
+                  ],
+                },
+              ],
+            },
+          });
+        };
         document.body.appendChild(s);
       }
     </script>
