@@ -1,13 +1,351 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex" />
-    <title>Painel de Controle - Casarão Music</title>
-    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <title>Painel de Controle · Casarão Music</title>
+    <style>
+      *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #0D0D0D;
+        color: #F5F0E8;
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      #login-screen {
+        width: 100%;
+        max-width: 420px;
+        padding: 2rem;
+        text-align: center;
+      }
+
+      .logo {
+        font-size: 1.5rem;
+        font-weight: 700;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 0.25rem;
+      }
+      .logo span { color: #D4A017; }
+
+      .tagline {
+        font-size: 0.75rem;
+        color: #9A9080;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+        margin-bottom: 2.5rem;
+      }
+
+      .card {
+        background: #1A1A1A;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 16px;
+        padding: 2rem;
+      }
+
+      .card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .card-sub {
+        font-size: 0.8rem;
+        color: #9A9080;
+        margin-bottom: 1.75rem;
+        line-height: 1.5;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        width: 100%;
+        padding: 0.85rem 1.5rem;
+        border-radius: 50px;
+        font-size: 0.875rem;
+        font-weight: 700;
+        cursor: pointer;
+        border: none;
+        transition: opacity 0.2s, transform 0.2s;
+      }
+      .btn:hover:not(:disabled) { opacity: 0.88; transform: scale(1.02); }
+      .btn:disabled { opacity: 0.5; cursor: not-allowed; }
+      .btn-primary { background: #D4A017; color: #000; }
+      .btn-ghost {
+        background: transparent;
+        color: #9A9080;
+        border: 1px solid rgba(255,255,255,0.12);
+        margin-top: 0.75rem;
+        font-size: 0.8rem;
+        font-weight: 500;
+      }
+
+      /* Code display */
+      .code-wrap { display: none; }
+      .code-wrap.visible { display: block; }
+
+      .user-code {
+        font-size: 2.25rem;
+        font-weight: 700;
+        letter-spacing: 0.3em;
+        color: #D4A017;
+        font-variant-numeric: tabular-nums;
+        margin: 1rem 0;
+      }
+
+      .verify-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        color: #D4A017;
+        font-size: 0.875rem;
+        font-weight: 600;
+        text-decoration: none;
+        padding: 0.6rem 1.2rem;
+        border-radius: 50px;
+        background: rgba(212,160,23,0.1);
+        border: 1px solid rgba(212,160,23,0.3);
+        transition: background 0.2s;
+        margin-bottom: 1.25rem;
+      }
+      .verify-link:hover { background: rgba(212,160,23,0.18); }
+
+      .status {
+        font-size: 0.78rem;
+        color: #9A9080;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+
+      .dot {
+        width: 7px; height: 7px;
+        border-radius: 50%;
+        background: #9A9080;
+        display: inline-block;
+        animation: pulse-dot 1.4s ease-in-out infinite;
+      }
+      .dot.success { background: #22c55e; animation: none; }
+      .dot.error   { background: #ef4444; animation: none; }
+
+      @keyframes pulse-dot {
+        0%, 100% { opacity: 1; }
+        50%       { opacity: 0.3; }
+      }
+
+      .error-msg {
+        color: #ef4444;
+        font-size: 0.8rem;
+        margin-top: 1rem;
+      }
+
+      .step-hint {
+        font-size: 0.75rem;
+        color: #9A9080;
+        background: rgba(255,255,255,0.04);
+        border-radius: 8px;
+        padding: 0.75rem 1rem;
+        text-align: left;
+        line-height: 1.6;
+        margin-bottom: 1.25rem;
+      }
+      .step-hint strong { color: #F5F0E8; }
+    </style>
   </head>
   <body>
-    <script src="https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js"></script>
+    <div id="login-screen">
+      <p class="logo">CASARÃO <span>MUSIC</span></p>
+      <p class="tagline">Painel de Controle</p>
+
+      <div class="card">
+        <!-- Step 1: initial -->
+        <div id="step-initial">
+          <p class="card-title">Entrar com GitHub</p>
+          <p class="card-sub">
+            Você será redirecionado para o GitHub para autorizar o acesso ao repositório.
+          </p>
+          <button class="btn btn-primary" id="btn-login" onclick="startDeviceFlow()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+            Entrar com GitHub
+          </button>
+        </div>
+
+        <!-- Step 2: show code -->
+        <div id="step-code" class="code-wrap">
+          <p class="card-title">Autorizar no GitHub</p>
+
+          <div class="step-hint">
+            <strong>1.</strong> Clique no botão abaixo para abrir o GitHub<br/>
+            <strong>2.</strong> Digite o código quando solicitado<br/>
+            <strong>3.</strong> Clique em <strong>Authorize</strong> — esta tela atualiza sozinha
+          </div>
+
+          <a id="verify-link" href="https://github.com/login/device" target="_blank" class="verify-link">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+              <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
+            </svg>
+            github.com/login/device
+          </a>
+
+          <p style="font-size:0.75rem; color:#9A9080; margin-bottom:0.4rem;">Seu código de acesso</p>
+          <p class="user-code" id="user-code">––––––––</p>
+
+          <div class="status" id="poll-status">
+            <span class="dot" id="poll-dot"></span>
+            <span id="poll-text">Aguardando autorização…</span>
+          </div>
+
+          <p class="error-msg" id="error-msg" style="display:none;"></p>
+
+          <button class="btn btn-ghost" onclick="resetFlow()">Cancelar</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decap CMS é inserido aqui após autenticação -->
+    <div id="nc-root"></div>
+
+    <script>
+      const STORAGE_KEY = 'decap-cms-user';
+
+      // ── Se já tem token, carrega o CMS direto ──────────────
+      (function () {
+        try {
+          const stored = localStorage.getItem(STORAGE_KEY);
+          if (stored) {
+            const { token } = JSON.parse(stored);
+            if (token) { loadCMS(); return; }
+          }
+        } catch (_) {
+          localStorage.removeItem(STORAGE_KEY);
+        }
+        document.getElementById('login-screen').style.display = 'flex';
+      })();
+
+      // ── Device Flow ────────────────────────────────────────
+      let pollTimer = null;
+      let currentDeviceCode = null;
+      let pollInterval = 5;
+
+      async function startDeviceFlow() {
+        const btn = document.getElementById('btn-login');
+        btn.disabled = true;
+        btn.textContent = 'Iniciando…';
+
+        try {
+          const res = await fetch('/api/device-start', { method: 'POST' });
+          const data = await res.json();
+
+          if (data.error) throw new Error(data.error);
+
+          currentDeviceCode = data.device_code;
+          pollInterval = data.interval ?? 5;
+
+          document.getElementById('user-code').textContent = data.user_code;
+          document.getElementById('verify-link').href = data.verification_uri;
+
+          document.getElementById('step-initial').style.display = 'none';
+          document.getElementById('step-code').classList.add('visible');
+
+          startPolling();
+        } catch (err) {
+          btn.disabled = false;
+          btn.innerHTML = 'Entrar com GitHub';
+          showError('Erro ao iniciar: ' + err.message);
+        }
+      }
+
+      function startPolling() {
+        pollTimer = setInterval(async () => {
+          try {
+            const res = await fetch('/api/device-poll', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ device_code: currentDeviceCode }),
+            });
+            const data = await res.json();
+
+            if (data.access_token) {
+              clearInterval(pollTimer);
+              onAuthSuccess(data.access_token);
+              return;
+            }
+
+            if (data.error === 'slow_down') {
+              pollInterval += 5;
+              clearInterval(pollTimer);
+              startPolling();
+              return;
+            }
+
+            if (data.error && data.error !== 'authorization_pending') {
+              clearInterval(pollTimer);
+              showError(data.error_description ?? data.error);
+            }
+          } catch (_) {
+            // network hiccup, keep polling
+          }
+        }, pollInterval * 1000);
+      }
+
+      function onAuthSuccess(token) {
+        const dot  = document.getElementById('poll-dot');
+        const text = document.getElementById('poll-text');
+        dot.classList.add('success');
+        text.textContent = 'Autenticado! Carregando painel…';
+
+        localStorage.setItem(STORAGE_KEY, JSON.stringify({
+          token,
+          provider:    'github',
+          backendName: 'github',
+        }));
+
+        setTimeout(loadCMS, 800);
+      }
+
+      function resetFlow() {
+        clearInterval(pollTimer);
+        currentDeviceCode = null;
+
+        document.getElementById('step-code').classList.remove('visible');
+        document.getElementById('step-initial').style.display = 'block';
+
+        const btn = document.getElementById('btn-login');
+        btn.disabled = false;
+        btn.innerHTML = `
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+            <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+          </svg>
+          Entrar com GitHub`;
+
+        document.getElementById('error-msg').style.display = 'none';
+      }
+
+      function showError(msg) {
+        const el = document.getElementById('error-msg');
+        el.textContent = msg;
+        el.style.display = 'block';
+        document.getElementById('poll-dot').classList.add('error');
+        document.getElementById('poll-text').textContent = 'Erro na autenticação.';
+      }
+
+      function loadCMS() {
+        document.getElementById('login-screen').style.display = 'none';
+        const script = document.createElement('script');
+        script.src = 'https://unpkg.com/decap-cms@^3.1.2/dist/decap-cms.js';
+        document.body.appendChild(script);
+      }
+    </script>
   </body>
 </html>

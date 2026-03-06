@@ -2,8 +2,6 @@ backend:
   name: github
   repo: SEU_USUARIO/casarao-music   # substitua pelo seu usuario/repositorio
   branch: main
-  base_url: https://casarao-music.vercel.app
-  auth_endpoint: api/auth
 
 media_folder: "public/uploads"
 public_folder: "/uploads"
