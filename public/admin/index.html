@@ -466,18 +466,7 @@
     <script>
       const STORAGE_KEY = 'decap-cms-user';
 
-      (function () {
-        try {
-          const stored = localStorage.getItem(STORAGE_KEY);
-          if (stored) {
-            const { token } = JSON.parse(stored);
-            if (token) { loadCMS(); return; }
-          }
-        } catch (_) {
-          localStorage.removeItem(STORAGE_KEY);
-        }
-        document.getElementById('login-screen').style.display = 'block';
-      })();
+      window.location.replace('/admin/cms.html');
 
       let pollTimer = null;
       let currentDeviceCode = null;
