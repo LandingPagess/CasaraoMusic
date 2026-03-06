@@ -46,7 +46,7 @@ const jsonLd = {
   servesCuisine: 'Bar',
   priceRange: '$$',
   sameAs: [
-    'https://www.instagram.com/casaraomusic',
+    'https://www.instagram.com/casaraomusic_/',
   ],
 };
 ---
@@ -105,6 +105,15 @@ const jsonLd = {
 
     <!-- Preconnect -->
     <link rel="preconnect" href="https://images.unsplash.com" />
+    <link rel="dns-prefetch" href="https://images.unsplash.com" />
+
+    <!-- Preload hero image (LCP) -->
+    <link
+      rel="preload"
+      as="image"
+      href="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=1920&q=65&auto=format&fm=webp"
+      type="image/webp"
+    />
 
     <!-- JSON-LD Structured Data -->
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
