@@ -1,72 +1,31 @@
 ---
+import { getCollection } from 'astro:content';
+
 const WA_INGRESSO =
   'https://api.whatsapp.com/send?phone=55XXXXXXXXXX&text=Ol%C3%A1!%20Quero%20garantir%20meu%20ingresso%20para%20o%20show%20no%20Casar%C3%A3o%20Music.';
 
 const genreBadge: Record<string, { bg: string; text: string }> = {
-  'Samba & Pagode': { bg: '#EAB308', text: '#000' },
-  'Forró Roots':    { bg: '#F97316', text: '#fff' },
-  'Rock Nacional':  { bg: '#DC2626', text: '#fff' },
+  'Samba & Pagode':   { bg: '#EAB308', text: '#000' },
+  'Forró Roots':      { bg: '#F97316', text: '#fff' },
+  'Rock Nacional':    { bg: '#DC2626', text: '#fff' },
   'MPB & Bossa Nova': { bg: '#9333EA', text: '#fff' },
   'Axé & Pop Baiano': { bg: '#D4A017', text: '#000' },
-  'Jazz & Blues':   { bg: '#2563EB', text: '#fff' },
+  'Jazz & Blues':     { bg: '#2563EB', text: '#fff' },
 };
 
-const eventos = [
-  {
-    diaSemana: 'Sexta-feira',
-    data: '14/03',
-    artista: 'Grupo Semente',
-    estilo: 'Samba & Pagode',
-    descricao: 'O samba raiz de volta às raízes com o Grupo Semente. Uma noite de muito pagode, emoção e brasilidade pura.',
-    tag: 'EM DESTAQUE',
-    destaque: true,
-  },
-  {
-    diaSemana: 'Sábado',
-    data: '15/03',
-    artista: 'Banda Nordestina',
-    estilo: 'Forró Roots',
-    descricao: 'O melhor do forró pé-de-serra com arranjos modernos. Sanfona, zabumba e triângulo ao vivo.',
-    tag: 'Imperdível',
-    destaque: false,
-  },
-  {
-    diaSemana: 'Sexta-feira',
-    data: '21/03',
-    artista: 'Noite do Rock',
-    estilo: 'Rock Nacional',
-    descricao: 'Uma noite dedicada ao rock brasileiro com as melhores bandas da cena local de Salvador.',
-    tag: 'Novo',
-    destaque: false,
-  },
-  {
-    diaSemana: 'Sábado',
-    data: '22/03',
-    artista: 'Clube do MPB',
-    estilo: 'MPB & Bossa Nova',
-    descricao: 'As melodias que definiram o Brasil, revividas com um toque contemporâneo e muito estilo.',
-    tag: null,
-    destaque: false,
-  },
-  {
-    diaSemana: 'Sexta-feira',
-    data: '28/03',
-    artista: 'Axé Eletro',
-    estilo: 'Axé & Pop Baiano',
-    descricao: 'A energia elétrica do axé baiano em uma festa que vai sacudir todo o Casarão Music.',
-    tag: 'Destaque',
-    destaque: false,
-  },
-  {
-    diaSemana: 'Sábado',
-    data: '29/03',
-    artista: 'Jazz & Blues Night',
-    estilo: 'Jazz & Blues',
-    descricao: 'Uma noite sofisticada com jazz e blues ao vivo. Perfeito para quem aprecia a música instrumental.',
-    tag: null,
-    destaque: false,
-  },
-];
+const rawEvents = await getCollection('eventos');
+
+const eventos = rawEvents
+  .sort((a, b) => a.id.localeCompare(b.id))
+  .map((entry) => ({
+    artista:   entry.data.artista,
+    data:      entry.data.data,
+    diaSemana: entry.data.diaSemana,
+    estilo:    entry.data.estilo,
+    descricao: entry.data.descricao,
+    tag:       entry.data.tag ?? null,
+    destaque:  entry.data.destaque,
+  }));
 ---
 
 <section id="programacao" class="py-24 md:py-32" style="background-color: var(--color-dark);">

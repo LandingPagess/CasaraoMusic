@@ -1,0 +1,79 @@
+backend:
+  name: github
+  repo: SEU_USUARIO/casarao-music   # substitua pelo seu usuario/repositorio
+  branch: main
+  base_url: https://casarao-music.vercel.app
+  auth_endpoint: api/auth
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: "pt"
+
+collections:
+  - name: "eventos"
+    label: "Eventos / Programação"
+    label_singular: "Evento"
+    folder: "src/content/eventos"
+    create: true
+    delete: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    summary: "{{artista}} · {{diaSemana}} {{data}} · {{estilo}}"
+    sortable_fields: ["data", "artista", "estilo"]
+    fields:
+      - label: "Artista / Nome do Evento"
+        name: "artista"
+        widget: "string"
+        hint: "Ex: Grupo Semente, Banda Nordestina…"
+
+      - label: "Data (ex: 14/03)"
+        name: "data"
+        widget: "string"
+        hint: "Formato DD/MM"
+        pattern: ['^\d{2}\/\d{2}$', "Use o formato DD/MM, ex: 14/03"]
+
+      - label: "Dia da Semana"
+        name: "diaSemana"
+        widget: "select"
+        options:
+          - "Segunda-feira"
+          - "Terça-feira"
+          - "Quarta-feira"
+          - "Quinta-feira"
+          - "Sexta-feira"
+          - "Sábado"
+          - "Domingo"
+
+      - label: "Estilo Musical"
+        name: "estilo"
+        widget: "select"
+        options:
+          - "Samba & Pagode"
+          - "Forró Roots"
+          - "Rock Nacional"
+          - "MPB & Bossa Nova"
+          - "Axé & Pop Baiano"
+          - "Jazz & Blues"
+
+      - label: "Descrição Curta"
+        name: "descricao"
+        widget: "text"
+        hint: "Máximo 150 caracteres recomendado"
+
+      - label: "Tag (opcional)"
+        name: "tag"
+        widget: "string"
+        required: false
+        hint: "Ex: Novo, Imperdível, Em Alta. Deixe em branco para nenhuma."
+
+      - label: "É Destaque?"
+        name: "destaque"
+        widget: "boolean"
+        default: false
+        hint: "Eventos em destaque ocupam mais espaço na grade."
+
+      - label: "Imagem (opcional)"
+        name: "thumbnail"
+        widget: "image"
+        required: false
+        hint: "Imagem de capa do evento."

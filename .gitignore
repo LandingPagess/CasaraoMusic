@@ -29,3 +29,5 @@ Thumbs.db
 
 # Astro
 .astro/
+.vercel
+.env*.local
