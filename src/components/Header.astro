@@ -26,8 +26,8 @@ const navLinks = [
             src="/images/logo.png"
             alt="Casarão Music"
             class="h-14 md:h-16 w-auto object-contain"
-            width="200"
-            height="200"
+            width="128"
+            height="128"
             fetchpriority="high"
           />
         </picture>
@@ -132,7 +132,7 @@ const navLinks = [
   }
 
   window.addEventListener('scroll', updateHeader, { passive: true });
-  updateHeader();
+  requestAnimationFrame(updateHeader);
 
   menuToggle?.addEventListener('click', () => {
     const isOpen = !mobileMenu?.classList.contains('hidden');

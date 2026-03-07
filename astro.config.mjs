@@ -6,6 +6,9 @@ export default defineConfig({
   site: 'https://casaraomusic.vercel.app',
   output: 'static',
   adapter: vercel(),
+  build: {
+    inlineStylesheets: 'auto',
+  },
   vite: {
     plugins: [tailwindcss()],
   },
